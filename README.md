@@ -51,9 +51,11 @@ After downloading, organize the dataset in the following structure:
 
 dataset/
 ├── train/
-│ ├── cattle/
-│ ├── buffalo/
+  ├── cattle/
+  ├── buffalo/
 ├── test/
+  ├── cattle/
+  ├── buffalo/
 
 
 Place the `dataset/` folder in the project root before training or testing the model.
