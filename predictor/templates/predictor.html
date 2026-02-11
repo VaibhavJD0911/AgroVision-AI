@@ -1,0 +1,166 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Breed ID | AgroVision-AI</title>
+
+  <link rel="stylesheet" href="{% static 'css/predict.css' %}?v=3" />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+</head>
+
+<body class="predict-page">
+
+  <nav class="glass-nav">
+    <div class="nav-content">
+      <div class="logo">🌾 AgroVision-AI <span class="badge">VISION</span></div>
+      <a href="/chatbot/" class="nav-link">Switch to Assistant</a>
+    </div>
+  </nav>
+
+  <main class="dashboard-container">
+    <div class="grid-layout">
+
+      <!-- Upload Card -->
+      <section class="analysis-card">
+        <div class="card-header">
+          <h2>Breed Analysis</h2>
+          <p>Upload a clear photo of cattle or buffalo for identification</p>
+        </div>
+
+        <div
+          class="drop-zone"
+          onclick="document.getElementById('imageInput').click()"
+        >
+          <input type="file" id="imageInput" accept="image/*" hidden />
+
+          <div class="drop-zone-content">
+            <div class="upload-icon">📸</div>
+            <p id="fileName">Drag & drop or <span>Browse Files</span></p>
+            <small>JPG • PNG • WEBP</small>
+          </div>
+
+          <img id="previewImg" class="preview-img" />
+        </div>
+
+        <button onclick="uploadImage()" class="primary-btn">
+          Run AgroVision AI
+        </button>
+      </section>
+
+      <!-- Result Card -->
+      <section class="result-card">
+
+        <div class="result-placeholder" id="placeholder">
+          <div class="scanner-line"></div>
+          <p>Awaiting Input Data…</p>
+        </div>
+
+        <div class="result-content" id="resultContent" style="display:none">
+
+          <div class="breed-header">
+            <span class="label">Primary Identification</span>
+            <h1 id="breedName">BREED NAME</h1>
+
+            <div class="confidence-bar">
+              <div class="fill" id="confFill"></div>
+              <span id="confText">0% Confidence</span>
+            </div>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-item">
+              <label>Origin</label>
+              <p id="resOrigin">-</p>
+            </div>
+            <div class="stat-item">
+              <label>Milk Yield</label>
+              <p id="resMilk">-</p>
+            </div>
+            <div class="stat-item">
+              <label>Climate</label>
+              <p id="resClimate">-</p>
+            </div>
+            <div class="stat-item">
+              <label>Usage</label>
+              <p id="resUsage">-</p>
+            </div>
+          </div>
+
+          <div class="feature-tag">
+            <label>Key Physical Features</label>
+            <p id="resFeatures">-</p>
+          </div>
+
+          <a href="/chatbot/" class="chat-btn">
+            Discuss health with AI Assistant →
+          </a>
+
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    const imageInput = document.getElementById("imageInput");
+    const previewImg = document.getElementById("previewImg");
+    const fileNameText = document.getElementById("fileName");
+
+    imageInput.addEventListener("change", () => {
+      const file = imageInput.files[0];
+      if (file) {
+        fileNameText.innerHTML = `Selected: <strong>${file.name}</strong>`;
+        previewImg.src = URL.createObjectURL(file);
+        previewImg.style.display = "block";
+        document.querySelector(".drop-zone-content").style.opacity = "0";
+      }
+    });
+
+    function uploadImage() {
+      const file = imageInput.files[0];
+      if (!file) {
+        alert("Please select an image first.");
+        return;
+      }
+
+      const placeholder = document.getElementById("placeholder");
+      placeholder.innerHTML =
+        `<div class="loader"></div><p>Analyzing Livestock Traits…</p>`;
+
+      const formData = new FormData();
+      formData.append("image", file);
+
+      fetch("/predictor/predict/", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        placeholder.style.display = "none";
+        document.getElementById("resultContent").style.display = "block";
+
+        document.getElementById("breedName").innerText = data.breed.toUpperCase();
+        document.getElementById("confText").innerText = `${data.confidence}% Match`;
+        document.getElementById("confFill").style.width = `${data.confidence}%`;
+
+        const info = data.info || {};
+        resOrigin.innerText = info.origin || "-";
+        resMilk.innerText = info.milk || "-";
+        resClimate.innerText = info.climate || "-";
+        resUsage.innerText = info.use || "-";
+        resFeatures.innerText = info.features || "-";
+      })
+      .catch(() => {
+        placeholder.innerHTML = `<p>Prediction failed. Try again.</p>`;
+      });
+    }
+  </script>
+
+</body>
+</html>
