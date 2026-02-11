@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroVision-AI | Intelligent Livestock Management</title>
+     <link rel="stylesheet" href="{% static 'css/home.css' %}?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+
+<body class="home-page">
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <div class="main-logo">🌾 AgroVision-AI</div>
+
+            <h1>
+                Smart AI for <br>
+                <span class="gradient-text">Livestock Intelligence</span>
+            </h1>
+
+            <p>
+                Empowering farmers with AI-driven cattle and buffalo breed identification
+                and an intelligent assistant for smarter livestock management.
+            </p>
+        </div>
+
+        <div class="action-cards">
+            <!-- Breed Identifier -->
+            <a href="{% url 'predictor:home' %}" class="home-card">
+                <div class="card-icon">🐄</div>
+                <h3>Breed Identifier</h3>
+                <p>
+                    Upload a cattle or buffalo image to identify the breed
+                    using deep learning and computer vision.
+                </p>
+                <span class="card-link">Launch Vision System →</span>
+            </a>
+
+            <!-- Farmer Chatbot -->
+            <a href="{% url 'chatbot:home' %}" class="home-card">
+                <div class="card-icon">🤖</div>
+                <h3>Farmer Assistant</h3>
+                <p>
+                    Chat with an AI-powered assistant for guidance on feeding,
+                    health symptoms, and livestock best practices.
+                </p>
+                <span class="card-link">Open Assistant →</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer-simple">
+        © 2026 AgroVision-AI • AI-Powered Solutions for Modern Farming
+    </div>
+
+</body>
+</html>
