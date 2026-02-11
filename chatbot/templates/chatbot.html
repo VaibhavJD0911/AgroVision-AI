@@ -1,0 +1,195 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FarmerAI | NextGen Assistant</title>
+
+    <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Typewriter Cursor */
+        .typing::after {
+            content: "|";
+            margin-left: 4px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo-icon">🌾</div>
+            <span class="logo-text">FarmerAI</span>
+        </div>
+
+        <div class="nav-group">
+            <p class="nav-label">Main Menu</p>
+
+            <a href="/" class="nav-item">
+                <span class="icon">📊</span> Breed Predictor
+            </a>
+
+            <a href="#" class="nav-item active">
+                <span class="icon">💬</span> Assistant Chat
+            </a>
+        </div>
+
+        <div class="sidebar-footer">
+            <a href="/" class="exit-btn">Exit Terminal</a>
+        </div>
+    </aside>
+
+
+    <main class="chat-main">
+
+        <header class="top-bar">
+            <div class="header-info">
+                <h2>Livestock Intelligence</h2>
+                <div class="status-badge">
+                    <span class="pulse-dot"></span>
+                    AI Engine Active
+                </div>
+            </div>
+        </header>
+
+
+        <div class="chat-window" id="chatWindow">
+
+            <div id="chatBox" class="chat-content">
+
+                <div class="message bot-msg slide-in">
+                    <div class="avatar-circle">AI</div>
+                    <div class="bubble">
+                        Welcome back! I'm ready to assist with your farm management. What's on your mind today?
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <footer class="input-section">
+            <div class="input-wrapper">
+
+                <input
+                    type="text"
+                    id="chatInput"
+                    placeholder="Ask anything about cattle..."
+                    onkeydown="if(event.key==='Enter') sendMessage()"
+                >
+
+                <button onclick="sendMessage()" class="send-btn">
+                    <span>Send</span>
+                </button>
+
+            </div>
+        </footer>
+
+    </main>
+
+</div>
+
+
+<script>
+
+function typeWriterEffect(element, text, speed = 20) {
+
+    element.innerHTML = "";
+    element.classList.add("typing");
+
+    let i = 0;
+
+    function typing() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, speed);
+        } else {
+            element.classList.remove("typing");
+        }
+    }
+
+    typing();
+}
+
+
+function sendMessage() {
+
+    const input = document.getElementById("chatInput");
+    const text = input.value.trim();
+    if (!text) return;
+
+    const chatBox = document.getElementById("chatBox");
+    const chatWindow = document.getElementById("chatWindow");
+
+    // USER MESSAGE
+    const userDiv = document.createElement("div");
+    userDiv.className = "message user-msg pop-in";
+    userDiv.innerHTML = `<div class="bubble">${text}</div>`;
+    chatBox.appendChild(userDiv);
+
+    input.value = "";
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+
+
+    // AI THINKING MESSAGE
+    const botDiv = document.createElement("div");
+    botDiv.className = "message bot-msg slide-in";
+
+    botDiv.innerHTML = `
+        <div class="avatar-circle">AI</div>
+        <div class="bubble">Thinking...</div>
+    `;
+
+    chatBox.appendChild(botDiv);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+
+
+    const formData = new FormData();
+    formData.append("message", text);
+
+
+    fetch("/chatbot/api/", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        setTimeout(() => {
+
+            const bubble = botDiv.querySelector(".bubble");
+
+            typeWriterEffect(
+                bubble,
+                data.reply,
+                Math.random() * 10 + 15
+            );
+
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+
+        }, 400);
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>
