@@ -1,0 +1,171 @@
+/* ===== COLOR VARIABLES ===== */
+:root {
+    --bg-dark: #020617;
+    --bg-card: rgba(15, 23, 42, 0.75);
+    --accent: #38bdf8;        /* Blue */
+    --accent-soft: #60a5fa;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+}
+
+/* ===== HOME PAGE ===== */
+.home-page {
+    background:
+        radial-gradient(circle at 50% -20%, #1e293b, #020617);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    text-align: center;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* ===== HERO ===== */
+.hero-content {
+    margin-bottom: 70px;
+    animation: fadeIn 0.9s ease-out;
+}
+
+.main-logo {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--accent);
+    letter-spacing: 3px;
+    margin-bottom: 18px;
+    text-transform: uppercase;
+}
+
+.hero-content h1 {
+    font-size: 3.6rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin: 0;
+    letter-spacing: -1.5px;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, var(--accent), var(--accent-soft));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-content p {
+    color: var(--text-muted);
+    max-width: 620px;
+    margin: 22px auto 0;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+/* ===== ACTION CARDS ===== */
+.action-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 360px);
+    gap: 34px;
+    animation: slide-in 1s ease-out;
+}
+
+.home-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 28px;
+    padding: 42px;
+    text-decoration: none;
+    color: white;
+    text-align: left;
+    transition: all 0.45s ease;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+}
+
+.home-card:hover {
+    transform: translateY(-14px) scale(1.02);
+    border-color: var(--accent);
+    background: rgba(30, 41, 59, 0.9);
+    box-shadow:
+        0 30px 60px rgba(0, 0, 0, 0.6),
+        0 0 35px rgba(56, 189, 248, 0.45);
+}
+
+/* ===== CARD CONTENT ===== */
+.card-icon {
+    font-size: 2.6rem;
+    margin-bottom: 26px;
+}
+
+.home-card h3 {
+    font-size: 1.55rem;
+    margin: 0 0 16px;
+    font-weight: 700;
+}
+
+.home-card p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 32px;
+    flex: 1;
+}
+
+.card-link {
+    font-weight: 700;
+    font-size: 0.8rem;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+}
+
+/* ===== GLOW DECORATION ===== */
+.home-card::before {
+    content: "";
+    position: absolute;
+    inset: -50%;
+    background: radial-gradient(
+        circle,
+        rgba(56, 189, 248, 0.08),
+        transparent 70%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.home-card:hover::before {
+    opacity: 1;
+}
+
+/* ===== FOOTER ===== */
+.footer-simple {
+    position: absolute;
+    bottom: 26px;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 800px) {
+    .action-cards {
+        grid-template-columns: 1fr;
+        width: 90%;
+    }
+
+    .hero-content h1 {
+        font-size: 2.6rem;
+    }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
