@@ -1,110 +1,122 @@
-# 🌾 AgroVision-AI  
-### AI-Powered Cattle & Buffalo Breed Identification with Farmer Assistant
+🌾 AgroVision-AI
+AI-Powered Cattle & Buffalo Breed Identification System
 
-AgroVision-AI is a deep learning–based web application that identifies **cattle and buffalo breeds from images** and provides guidance through a **farmer-focused chatbot**. The project integrates **computer vision, machine learning, and web development** to support smarter livestock management.
+AgroVision-AI is an AI-driven web application designed to assist farmers and agricultural stakeholders by identifying cattle and buffalo breeds from images and providing basic livestock guidance through a chatbot.
 
----
+The system combines deep learning (computer vision) with a Django-based web platform, demonstrating a practical application of AI in the agriculture domain.
 
-## 🚀 Features
+📌 Project Overview
 
-- 🐄 **Cattle & Buffalo Breed Identification** using deep learning  
-- 🧠 **CNN-based Image Classification** with TensorFlow  
-- 🤖 **Rule-Based Farmer Chatbot** for livestock-related queries  
-- 🌐 **Web Application** built using Django  
-- 📊 Displays **prediction confidence** and breed information  
-- 🎥 Complete **video demo** showing real-time working  
+AgroVision-AI uses a Convolutional Neural Network (CNN) to analyze uploaded images and predict the breed of cattle or buffalo. Alongside breed identification, the application includes a rule-based farmer assistant chatbot to answer common livestock-related questions.
 
----
+This project showcases skills in:
 
-## 🛠️ Tech Stack
+Machine Learning & Deep Learning
 
-### Backend & Machine Learning
-- Python  
-- Django  
-- TensorFlow / Keras  
-- NumPy  
-- Pillow  
+Computer Vision
 
-### Frontend
-- HTML  
-- CSS  
-- JavaScript  
+Backend Web Development
 
-### Tools & Platforms
-- Kaggle (dataset source)  
-- GitHub (version control)  
+AI-driven Application Design
 
----
+🚀 Key Features
 
-## 📊 Dataset
+🐄 Cattle & Buffalo Breed Identification from images
 
-This project uses **publicly available datasets from Kaggle** for cattle and buffalo breed image classification.
+🧠 CNN-based Image Classification using TensorFlow & Keras
 
-Due to large size constraints, the datasets are **not included in this repository**.
+📊 Prediction Confidence Display for better interpretability
 
-🔗 **Dataset Sources (Kaggle):**
-- Cattle Breed Dataset: https://www.kaggle.com/datasets/sujayroy723/indian-cattle-breeds  
-- Buffalo Breed Dataset: https://www.kaggle.com/datasets/atharvadarpude/indian-buffalo-dataset  
+🤖 Rule-Based Farmer Chatbot for livestock guidance
 
-After downloading, organize the dataset in the following structure:
+🌐 Django Web Application with simple and clean UI
 
+🎥 Complete Video Demo showing real-time functionality
 
+🛠️ Technology Stack
+Backend & Machine Learning
+
+Python
+
+Django
+
+TensorFlow / Keras
+
+NumPy
+
+Pillow
+
+Frontend
+
+HTML
+
+CSS
+
+JavaScript
+
+Tools & Platforms
+
+Kaggle (Dataset source)
+
+GitHub (Version control)
+
+📊 Dataset Information
+
+This project uses publicly available datasets from Kaggle for cattle and buffalo breed classification.
+
+⚠️ Note: Due to size limitations, datasets are not included in this repository.
+
+Dataset Sources
+
+Indian Cattle Breeds Dataset
+https://www.kaggle.com/datasets/sujayroy723/indian-cattle-breeds
+
+Indian Buffalo Dataset
+https://www.kaggle.com/datasets/atharvadarpude/indian-buffalo-dataset
+
+Expected Dataset Structure
 dataset/
 ├── train/
-  ├── cattle/
-  ├── buffalo/
+│   ├── cattle/
+│   └── buffalo/
 ├── test/
-  ├── cattle/
-  ├── buffalo/
+│   ├── cattle/
+│   └── buffalo/
 
+Place the dataset/ folder in the project root directory before training or testing the model.
 
-Place the `dataset/` folder in the project root before training or testing the model.
-
----
-
-## ⚙️ Setup Instructions
-
-### 1️⃣ Clone the repository
-```bash
+⚙️ Installation & Setup
+1️⃣ Clone the Repository
 git clone https://github.com/VaibhavJD0911/AgroVision-AI.git
 cd AgroVision-AI
-
-2️⃣ Create and activate virtual environment
+2️⃣ Create & Activate Virtual Environment
 python -m venv cattle-env
 
-# Windows
+Windows
+
 cattle-env\Scripts\activate
 
-# macOS / Linux
+macOS / Linux
+
 source cattle-env/bin/activate
-
-3️⃣ Install dependencies
+3️⃣ Install Dependencies
 pip install -r requirements.txt
-
-4️⃣ Run the Django server
+4️⃣ Run the Django Server
 python manage.py runserver
 
-
 Open your browser and visit:
-
-http://127.0.0.1:8000/
+👉 http://127.0.0.1:8000/
 
 🧪 Model Training & Testing
-
-Train the model:
-
+Train the Model
 python train_model.py
-
-
-Test predictions:
-
+Test Breed Prediction
 python test_predict.py
+🎥 Video Demonstration
 
-🎥 Video Demo
+A complete working demo of AgroVision-AI is available here:
 
-A full working demo of AgroVision-AI is available here:
-
-▶️ YouTube Demo:
+▶️ YouTube Demo
 https://youtu.be/OZuFYd-LAIM
 
 📁 Project Structure
@@ -118,3 +130,17 @@ AgroVision-AI/
 ├── requirements.txt
 ├── README.md
 └── .gitignore
+📌 Future Enhancements
+
+Improve model accuracy with a larger and more diverse dataset
+
+Replace rule-based chatbot with an NLP-based conversational AI
+
+Deploy the application on cloud platforms (AWS / Azure / GCP)
+
+Add mobile-friendly UI and multilingual support
+
+👤 Author
+
+Vaibhav J D
+AI & Full-Stack Development Enthusiast
