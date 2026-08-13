@@ -72,7 +72,6 @@ INSTALLED_APPS = [
     # Your applications
     "predictor",
     "chatbot",
-    "health_analyzer",
 ]
 
 
