@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class PredictorConfig(AppConfig):
-    name = 'predictor'
+class ChatbotConfig(AppConfig):
+    name = 'chatbot'
