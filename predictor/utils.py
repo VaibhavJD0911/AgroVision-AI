@@ -1,9 +1,7 @@
-import tensorflow as tf
 import numpy as np
 from PIL import Image
 import os
 import json
-from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 
 # ----------------------
 # Paths
@@ -12,10 +10,25 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODEL_PATH = os.path.join(BASE_DIR, "model", "breed_model.h5")
 CLASS_JSON_PATH = os.path.join(BASE_DIR, "model", "class_indices.json")
 
+
 # ----------------------
-# Load Model
+# Model Loader
 # ----------------------
-model = tf.keras.models.load_model(MODEL_PATH)
+# TensorFlow and the model are loaded only when
+# the first prediction is requested.
+model = None
+
+
+def get_model():
+    global model
+
+    if model is None:
+        import tensorflow as tf
+
+        model = tf.keras.models.load_model(MODEL_PATH)
+
+    return model
+
 
 # ----------------------
 # Load Class Mapping
@@ -25,8 +38,9 @@ with open(CLASS_JSON_PATH, "r") as f:
 
 CLASS_NAMES = list(class_indices.keys())
 
+
 # ----------------------
-# Breed Information (ALL 13 BREEDS)
+# Breed Information
 # ----------------------
 BREED_INFO = {
 
@@ -137,26 +151,46 @@ BREED_INFO = {
     }
 }
 
+
 # ----------------------
 # Image Preprocessing
 # ----------------------
 def preprocess_image(image_file):
+    from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
+
     img = Image.open(image_file).convert("RGB").resize((224, 224))
     img = np.array(img)
+
+    # MobileNetV2 preprocessing
     img = preprocess_input(img)
+
+    # Add batch dimension
     img = np.expand_dims(img, axis=0)
+
     return img
+
 
 # ----------------------
 # Prediction Function
 # ----------------------
 def predict_breed(image_file):
+    # TensorFlow/model is loaded only when
+    # an actual prediction is requested.
+    model = get_model()
+
     img = preprocess_image(image_file)
-    pred = model.predict(img)[0]
+
+    # verbose=0 prevents prediction logs in production
+    pred = model.predict(img, verbose=0)[0]
 
     index = np.argmax(pred)
+
     breed = CLASS_NAMES[index]
-    confidence = round(float(pred[index]) * 100, 2)
+
+    confidence = round(
+        float(pred[index]) * 100,
+        2
+    )
 
     info = BREED_INFO.get(breed, {})
 
